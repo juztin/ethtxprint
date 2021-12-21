@@ -29,7 +29,7 @@ func (s status) String() string {
 	case StatusFailed:
 		return "Failed"
 	case StatusSuccessful:
-		return "Succesful"
+		return "Successful"
 	default:
 		return "Unknown"
 	}
@@ -125,6 +125,7 @@ func (t *Transaction) String() string {
 	}
 
 	return fmt.Sprintf(`Transaction Hash:         %s
+Status:                   %s
 Block:                    %s
 Timestamp:                %s
 From:                     %s
@@ -139,12 +140,13 @@ Base Fee Per Gas:         %s%s%s%s
 Nonce (position):         %d (%s)
 Input Data:               %x
 `,
-		t.hash.String(),
+		t.hash,
+		t.status,
 		blockMsg,
 		timeMsg,
-		t.from.String(),
-		t.to.String(),
-		ethunit.WeiToGwei(t.value).Text('f', -1),
+		t.from,
+		t.to,
+		ethunit.WeiToEther(t.value).Text('f', -1),
 		txFeeMsg,
 		ethunit.WeiToEther(t.gasPrice).Text('f', -1), ethunit.WeiToGwei(t.gasPrice).Text('f', -1),
 		t.txType, txTypeMessage(t.txType),
